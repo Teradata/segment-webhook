@@ -15,13 +15,13 @@ The function takes calls from Twilio Segment and writes data to a Vantage instan
 
 1. Create a Vantage Express instance and expose it to the Internet. For example, you could follow [the "Run Vantage Express on GCP" guide](https://quickstarts.teradata.com/docs/17.10/vantage.express.gcp.html).
 2. Clone this repository:
-  ```
-  git clone 
-  ```
+    ```
+    git clone 
+    ```
 3. Deploy the function:
-  ```
-  TODO: gcloud
-  ```
+    ```
+    TODO: gcloud
+    ```
 4. Configure Teradata Vantage as a destination in Segment.
 
 
