@@ -1,0 +1,16 @@
+{
+  "receivedAt": "2021-12-11T01:52:35Z",
+  "messageId": "zPV3xOop6D",
+  "type": "identify",
+  "traits": {
+    "address": {
+      "city": "San Francisco",
+      "country": "US",
+      "postalCode": "94111",
+      "state": "CA"
+    }
+  },
+  "userId": "Onn2qoQPno",
+  "anonymousId": "KY0vLZWnRF",
+  "timestamp": "2021-12-11T01:52:35Z"
+}

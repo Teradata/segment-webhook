@@ -1,0 +1,13 @@
+{
+    "receivedAt": "2021-12-10T21:01:45Z",
+    "messageId": "WyOJTdWpGU",
+    "type": "page",
+    "name": "Home",
+    "properties": {
+        "title": "Welcome | Initech",
+        "url": "example.org"
+    },
+    "userId": null,
+    "anonymousId": "nXPjMULTLF",
+    "timestamp": "2021-12-10T21:01:45Z"
+}

@@ -1,0 +1,31 @@
+{
+  "receivedAt": "2021-12-10T21:01:45Z",
+  "messageId": "xrnXb0orfN",
+  "type": "track",
+  "context": {
+    "app": {
+      "name": "Quote-Cof",
+      "version": "359.5223",
+      "namespace": "example.info"
+    },
+    "device": {
+      "id": "e782174b-39e2-4e89-87e7-712a42690759",
+      "advertisingId": "97f92e74-68c2-4ffe-a5a4-1ee940793fc2",
+      "manufacturer": "Warmjayin",
+      "model": "Unistring",
+      "type": "android"
+    },
+    "ip": "67.186.73.44",
+    "locale": "nl-NL",
+    "os": {
+      "version": "-427.5644"
+    }
+  },
+  "properties": {
+    "title": "Intro to Analytics"
+  },
+  "event": "Course Clicked",
+  "userId": "Adb1mOTsQU",
+  "anonymousId": "Pm68bQLAFf",
+  "timestamp": "2021-12-10T21:01:45Z"
+}
