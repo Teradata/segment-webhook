@@ -31,7 +31,8 @@ The app takes calls from Twilio Segment and writes data to a Vantage instance.
 
 ## Limitations
 
-1. There is no cleanup of Teradata connections on shutdown. As the app gets restarted, connections leak. Once the limit of connections is reached, no client app will be able to connect to Vantage.
-2. The app relies on secrets that are currently passed as env variables. Secrets should be retrieved from Secret Manager instead.
-3. Inbound security relies on sharing an API key between Segment and the Cloud Run app. Ideally, your Cloud Run service would be behind a WAF like Cloud Run, to allow connectivity only from Segment's IP addresses.
-4. The example shows how to deploy the app in a single region. In many cases, this setup doesn't guarantee enough uptime. The app should be deployed in more than one region behind a Global Load Balancer.
+* The app relies on secrets that are currently passed as env variables. Secrets should be retrieved from Secret Manager instead.
+* Inbound security relies on sharing an API key between Segment and the Cloud Run app. Ideally, your Cloud Run service would be behind a WAF like Cloud Run, to allow connectivity only from Segment's IP addresses.
+* The example shows how to deploy the app in a single region. In many cases, this setup doesn't guarantee enough uptime. The app should be deployed in more than one region behind a Global Load Balancer.
+* Unit tests use a live Vantage instance. The tests should mock connections to Vantage. There should be a separate integration test suite that tests the app against a live Vantage instance.
+* There are no CI/CD examples using GitHub Actions.

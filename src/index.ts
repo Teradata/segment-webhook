@@ -63,19 +63,13 @@ function segmentWebhookListener (
         throw new Error(`Unknown event type: ${requestData.type}`);
 
     }
-    response.sendStatus(200);
+    response.status(200);
     return;
   } catch (error) {
     console.error(new Error(`Unable to save segment data to Vantage: ${error}`));
     response.status(500).send({ message: 'Unable to save segment data to Vantage.' });
     return;
-  } /* finally {
-    try {
-      teradataConnection.close();
-    } catch(error) {
-      console.warn(new Error(`Couldn't cleanup connections: ${error}`));
-    }
-  } */
+  }
 }
 
 function insertTrack(requestData: any) {
@@ -161,6 +155,16 @@ if (['dev', 'production'].includes(NODE_ENV)) {
     console.log(`segment-webhook: listening on port ${port}`);
   });
 }
+
+process.on('SIGTERM', function () {
+  console.log('segment-webhook: received SIGTERM, exiting gracefully');
+  try {
+    teradataConnection.close();
+  } catch(error) {
+    console.warn(new Error(`Couldn't cleanup connections: ${error}`));
+  }
+  process.exit(0);
+});
 
 
 export const exportedForTesting = {

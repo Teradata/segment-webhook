@@ -5,11 +5,9 @@ import group1 from './data/group1.json';
 import identifies1 from './data/identifies1.json';
 import { exportedForTesting as app} from '../src/';
 
-const httpResponseMockSendStatus = jest.fn();
 const httpResponseMockStatus = jest.fn();
 const httpResponseMockSend = jest.fn();
 const httpResponse = {
-  sendStatus: httpResponseMockSendStatus,
   status: httpResponseMockStatus.mockReturnValue({
     send: httpResponseMockSend
   })
@@ -59,7 +57,7 @@ test('should return error if API key invalid', async () => {
     app.segmentWebhookListener(
       { body, headers: {authorization: buildAuthorizationHeader(GOOD_API_KEY)} } as any, httpResponse as any
     );
-    expect(httpResponseMockSendStatus).toBeCalledWith(200);
+    expect(httpResponseMockStatus).toBeCalledWith(200);
   });
 })
 
