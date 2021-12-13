@@ -19,7 +19,7 @@ The app takes calls from Twilio Segment and writes data to a Vantage instance.
     ```
     git clone git@github.com:Teradata/segment-webhook.git
     ```
-3. Build the application:
+3. Build the application (replace `<PROJECT_ID>` with your GCP project id):
     ```
     gcloud builds submit --tag gcr.io/<PROJECT_ID>/webhook-segment
     ```
