@@ -21,7 +21,7 @@ The app takes calls from Twilio Segment and writes data to a Vantage instance.
     ```
 3. Build the application:
     ```
-    gcloud builds submit --tag gcr.io/babelek/webhook-segment
+    gcloud builds submit --tag gcr.io/<PROJECT_ID>/webhook-segment
     ```
 3. Deploy the app to cloud run (replace `<PROJECT_ID>` with your GCP project id and `<VANTAGE_HOST>` with your Vantage host name or IP address):
     ```
