@@ -1,5 +1,6 @@
 import { TeradataConnection } from 'teradata-nodejs-driver'
 import express from "express";
+import { TeradataCursor } from 'teradata-nodejs-driver/teradata-cursor';
 const API_KEY = process.env.API_KEY || 'GOOD_KEY';
 const VANTAGE_HOST = process.env.VANTAGE_HOST || 'localhost';
 const VANTAGE_PORT = process.env.VANTAGE_PORT || '1025';
@@ -60,7 +61,7 @@ export function segmentWebhookListener (
         throw new Error(`Unknown event type: ${requestData.type}`);
 
     }
-    response.status(200);
+    response.status(200).send();
     return;
   } catch (error) {
     console.error(new Error(`Unable to save segment data to Vantage: ${error}`));
@@ -81,7 +82,7 @@ function insertTrack(requestData: any) {
         /* event */ requestData.type,
         /* event_text */ requestData.event
   ];
-  teradataConnection.cursor().execute('insert into segment.tracks (?, ?, ?, ?, ?, ?, ?, ?, ?)', data);
+  execute('insert into segment.tracks (?, ?, ?, ?, ?, ?, ?, ?, ?)', data);
   return;
 }
 
@@ -95,7 +96,7 @@ function insertPage(requestData: any) {
         /* properties */ JSON.stringify(requestData.properties),
         /* page */ requestData.name
   ];
-  teradataConnection.cursor().execute('insert into segment.pages (?, ?, ?, ?, ?, ?, ?)', data);
+  execute('insert into segment.pages (?, ?, ?, ?, ?, ?, ?)', data);
   return;
 }
 
@@ -109,7 +110,7 @@ function insertScreen(requestData: any) {
         /* properties */ JSON.stringify(requestData.properties),
         /* screen */ requestData.name
   ];
-  teradataConnection.cursor().execute('insert into segment.screens (?, ?, ?, ?, ?, ?, ?)', data);
+  execute('insert into segment.screens (?, ?, ?, ?, ?, ?, ?)', data);
   return;
 }
 
@@ -123,7 +124,7 @@ function insertGroup(requestData: any) {
         /* traits */ JSON.stringify(requestData.traits),
         /* group_id */ requestData.groupId
   ];
-  teradataConnection.cursor().execute('insert into segment.groups (?, ?, ?, ?, ?, ?, ?)', data);
+  execute('insert into segment.groups (?, ?, ?, ?, ?, ?, ?)', data);
   return;
 }
 
@@ -136,7 +137,18 @@ function insertIdentifies(requestData: any) {
         /* anonymous_id */ requestData.anonymousId,
         /* traits */ JSON.stringify(requestData.traits)
   ];
-  teradataConnection.cursor().execute('insert into segment.identifies (?, ?, ?, ?, ?, ?)', data);
+  execute('insert into segment.identifies (?, ?, ?, ?, ?, ?)', data);
+  return;
+}
+
+export function execute(sql: string, data: any[]): void {
+  let cursor;
+  try {
+    cursor = teradataConnection.cursor();
+    cursor.execute(sql, data);
+  } finally {
+    if (cursor) cursor.close();
+  }
   return;
 }
 

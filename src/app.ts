@@ -8,7 +8,7 @@ app.post('/', (req, res) => {
   return segmentWebhookListener(req, res);
 });
 
-export function appClose() {
+export function close() {
   try {
     connectionClose();
   } catch(error) {

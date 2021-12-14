@@ -1,0 +1,32 @@
+name: CD
+on:
+  workflow_dispatch:
+    inputs:
+      GCPProjectId:
+        description: 'GCP project id'
+        required: true
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup gcloud environment
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ github.event.inputs.GCPProjectId }}
+          export_default_credentials: true
+      - name: build container
+        run: gcloud builds submit --tag gcr.io/$PROJECT_ID/webhook-segment
+        env:
+          PROJECT_ID: ${{ github.event.inputs.GCPProjectId }}
+      - name: deploy to cloud run
+        run: |
+          gcloud run deploy --image gcr.io/$PROJECT_ID/webhook-segment webhook-segment \
+            --region us-central1 \
+            --allow-unauthenticated \
+            --update-env-vars VANTAGE_HOST=vantage.mycompany.com \
+            --update-secrets 'API_KEY=API_KEY_SECRET:1,VANTAGE_USER=VANTAGE_USER_SECRET:1, VANTAGE_PASSWORD=VANTAGE_PASSWORD_SECRET:1'
+        env:
+          PROJECT_ID: ${{ github.event.inputs.GCPProjectId }}

@@ -19,6 +19,7 @@ The app takes calls from Twilio Segment and writes data to a Vantage instance.
     ```
     git clone git@github.com:Teradata/segment-webhook.git
     ```
+1. Run `segment.sql` on your Vantage db using your favorite SQL IDE or Vantage command line tool called `bteq`. The SQL script will create a new database called `Segment` and a set of tables to store Segment events.
 1. Build the application (replace `<PROJECT_ID>` with your GCP project id):
     ```
     gcloud builds submit --tag gcr.io/<PROJECT_ID>/webhook-segment
@@ -43,13 +44,13 @@ The app takes calls from Twilio Segment and writes data to a Vantage instance.
     EOF
     gcloud secrets versions add VANTAGE_PASSWORD_SECRET --data-file=/tmp/vantage_password.txt
     ```
-1. Deploy the app to cloud run (replace `<PROJECT_ID>` with your GCP project id and `<VANTAGE_HOST>` with your Vantage host name or IP address):
+1. Deploy the app to cloud run (replace `<PROJECT_ID>` with your GCP project id, `<VANTAGE_HOST>, <*_SECRET:VERSION>` with values for your environment):
     ```
     gcloud run deploy --image gcr.io/<PROJECT_ID>/webhook-segment webhook-segment \
       --region us-central1 \
       --allow-unauthenticated \
       --update-env-vars VANTAGE_HOST=<VANTAGE_HOST> \
-      --set-secrets 'API_KEY=<API_KEY_SECRET:VERSION>,VANTAGE_USER=<VANTAGE_USER_SECRET:VERSION>, VANTAGE_PASSWORD=<VANTAGE_PASSWORD_SECRET:VERSION>'
+      --update-secrets 'API_KEY=<API_KEY_SECRET:VERSION>,VANTAGE_USER=<VANTAGE_USER_SECRET:VERSION>, VANTAGE_PASSWORD=<VANTAGE_PASSWORD_SECRET:VERSION>'
 
     ```
 1. Configure Teradata Vantage as a destination in Segment.
@@ -58,4 +59,3 @@ The app takes calls from Twilio Segment and writes data to a Vantage instance.
 
 * Inbound security relies on sharing an API key between Segment and the Cloud Run app. Ideally, your Cloud Run service would be behind a WAF like Cloud Run, to allow connectivity only from Segment's IP addresses.
 * The example shows how to deploy the app in a single region. In many cases, this setup doesn't guarantee enough uptime. The app should be deployed in more than one region behind a Global Load Balancer.
-* There are no CI/CD examples using GitHub Actions.

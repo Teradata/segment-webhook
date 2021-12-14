@@ -10,7 +10,7 @@
     "start": "tsc && NODE_ENV=dev node dist/src/index.js",
     "lint": "tslint --project tsconfig.json",
     "test": "jest --testPathIgnorePatterns integration/*",
-    "integration-test": "jest --forceExit -- integration/index.test.ts ",
+    "integration-test": "jest --detectOpenHandles --forceExit -- integration/index.test.ts ",
     "clean": "rm -rf ./dist/*",
     "build-container": "podman build. -t segment-webhook"
   },

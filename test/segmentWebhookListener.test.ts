@@ -13,7 +13,8 @@ jest.mock('teradata-nodejs-driver', () => {
         connect: jest.fn(),
         close: jest.fn(),
         cursor: jest.fn(() => ({
-          execute: executeMock
+          execute: executeMock,
+          close: jest.fn()
         }))
       }
     })
@@ -24,8 +25,9 @@ const httpResponseMockStatus = jest.fn();
 const httpResponseMockSend = jest.fn();
 const httpResponse = {
   status: httpResponseMockStatus.mockReturnValue({
-    send: httpResponseMockSend
-  })
+    send: httpResponseMockSend,
+  }),
+  end: jest.fn()
 }
 
 const spyConsoleError: jest.SpyInstance = jest.spyOn(global.console, 'error');
