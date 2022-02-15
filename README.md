@@ -1,5 +1,8 @@
 # segment-webhook
-GCP Cloud Run project that implements Twilio Segment's webhook interface.
+GCP Cloud Run project that implements Twilio Segment's webhook interface. The component can be used by Teradata to create a Segment-native destination. Such destination would allow Teradata customers to move data from Segment to Teradata. The component is not generally available yet. If you are looking to integrate with Segment today, see https://github.com/Teradata/segment-integration-tutorial.
+
+<img width="1203" alt="image" src="https://user-images.githubusercontent.com/6579240/154080531-8b639f96-b6b7-4550-9a36-fbc3d8b3b181.png">
+
 
 ## Overview
 The app takes calls from Twilio Segment and writes data to a Vantage instance.
