@@ -19,16 +19,16 @@ The app takes calls from Twilio Segment and writes data to a Vantage instance.
 
 1. Create a Vantage Express instance and expose it to the Internet. For example, see [Run Vantage Express on GCP](https://quickstarts.teradata.com/docs/17.10/vantage.express.gcp.html).
 1. Clone this repository:
-    ```
+    ```bash
     git clone git@github.com:Teradata/segment-webhook.git
     ```
 1. Run `segment.sql` on your Vantage db using your favorite SQL IDE or Vantage command line tool called `bteq`. The SQL script will create a new database called `Segment` and a set of tables to store Segment events.
 1. Build the application (replace `<PROJECT_ID>` with your GCP project id):
-    ```
+    ```bash
     gcloud builds submit --tag gcr.io/<PROJECT_ID>/webhook-segment
     ```
 1. Define an API key that you will share with Segment. Store the API key in GCP Secret Manager:
-    ```
+    ```bash
     gcloud secrets create API_KEY_SECRET
     cat << EOF > /tmp/api_key.txt
     a_very_long_and_secure_api_key_that_you_should_change
@@ -48,7 +48,7 @@ The app takes calls from Twilio Segment and writes data to a Vantage instance.
     gcloud secrets versions add VANTAGE_PASSWORD_SECRET --data-file=/tmp/vantage_password.txt
     ```
 1. Deploy the app to cloud run (replace `<PROJECT_ID>` with your GCP project id, `<VANTAGE_HOST>, <*_SECRET:VERSION>` with values for your environment):
-    ```
+    ```bash
     gcloud run deploy --image gcr.io/<PROJECT_ID>/webhook-segment webhook-segment \
       --region us-central1 \
       --allow-unauthenticated \
